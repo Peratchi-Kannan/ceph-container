@@ -26,6 +26,11 @@ __EXPOSE_PORTS__
 __DOCKERFILE_LABELS__
 
 # Escape char after immediately after RUN allows comment in first line
+RUN cd /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
+RUN yum -y install java
 RUN \
     # Install all components for the image, whether from packages or web downloads.
     # Typical workflow: add new repos; refresh repos; install packages; package-manager clean;
